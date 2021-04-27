@@ -9,11 +9,11 @@
     </head>
     <body class="antialiased">
 
-    <div>
-        <h1>Find your disc!</h1>
-    </div>
+{{--    <div>--}}
+{{--        <h1>Find your disc!</h1>--}}
+{{--    </div>--}}
 
-    @livewire('discsearch')
+{{--    @livewire('discsearch')--}}
 
 
     @livewireScripts
