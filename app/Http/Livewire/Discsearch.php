@@ -11,13 +11,15 @@ class Discsearch extends Component
     public $visible = false;
     public function render()
     {
-        return view('livewire.discsearch', [
-            'discs' => Disc::where('Brand','like', '%'.$this->search.'%')->orWhere('Mold','like', '%'.$this->search.'%')->get()
-        ]);
-    }
 
-    public function showHideResults()
-    {
-
+        if ($this->search == "") {
+            return view('livewire.discsearch', [
+                'discs' => Disc::all()
+            ]);
+        } else {
+            return view('livewire.discsearch', [
+                'discs' => Disc::where('Brand', 'like', '%' . $this->search . '%')->orWhere('Mold', 'like', '%' . $this->search . '%')->get()
+            ]);
+        }
     }
 }
