@@ -27,6 +27,17 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'address',
+        'city',
+        'state',
+        'zip',
+        'venmo',
+        'paypal',
+        'email_consent',
+        'sms_consent',
+        'rating_as_buyer',
+        'rating_as_seller',
     ];
 
     /**
@@ -58,4 +69,15 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function discs() {
+        return $this->hasMany(UserDisc::class);
+    }
+    public function buyerRatings() {
+        return $this->hasMany(BuyerRating::class);
+    }
+    public function sellerRatings() {
+        return $this->hasMany(SellerRating::class);
+    }
+
 }

@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DiscController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,15 +14,18 @@ use App\Http\Controllers\DiscController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
-
-
-Route::middleware(['auth:sanctum', 'verified'])->get('/discadmin', function () {
-    return view('admin_disc_add');
+Route::middleware(['auth:sanctum', 'verified'])->group(function(){
+    Route::get('/dashboard', \App\Http\Controllers\UserProfile::class)->name('dashboard');
+    Route::get('/manage-discs', \App\Http\Controllers\UserDiscController::class)->name('managediscs');
+    Route::get('/manage-discs/add', [\App\Http\Controllers\UserDiscController::class, 'addImages'])->name('managediscimages');
+    Route::post('/manage-discs/add-cropped', [\App\Http\Controllers\UserDiscController::class, 'uploadCropImage'])->name('managediscimagecrop');
+    Route::get('/manage-discs/clear-cropped/{img}', [\App\Http\Controllers\UserDiscController::class, 'clearImages'])->name('managediscclearimages');
+    Route::get('/manage-discs/add-detail', [\App\Http\Controllers\UserDiscController::class, 'addDetail'])->name('managediscdetails');
+    Route::post('/manage-discs/save', [\App\Http\Controllers\UserDiscController::class, 'saveDisc'])->name('managediscsavedisc');
 });
-Route::middleware(['auth:sanctum', 'verified'])->post('/save-disc', [DiscController::class, 'saveNew']);
+
+//Public facing pages
+Route::get('/search', \App\Http\Controllers\SearchDiscsController::class)->name('userdiscsearch');
